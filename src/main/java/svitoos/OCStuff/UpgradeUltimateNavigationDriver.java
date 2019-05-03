@@ -27,7 +27,7 @@ public class UpgradeUltimateNavigationDriver extends DriverItem implements HostA
   @Override
   public boolean worksWith(ItemStack stack, Class<? extends EnvironmentHost> host) {
     return worksWith(stack)
-        && (isRobot(host) || Drone.class.isAssignableFrom(host));
+        && (isRotatable(host));
   }
 
   @Override

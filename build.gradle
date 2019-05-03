@@ -53,7 +53,7 @@ repositories {
 }
 
 dependencies {
-  compile "li.cil.oc:OpenComputers:MC1.7.10-1.7.+:api"
+    compile "li.cil.oc:OpenComputers:${config.oc.version}:dev"
 }
 
 processResources {

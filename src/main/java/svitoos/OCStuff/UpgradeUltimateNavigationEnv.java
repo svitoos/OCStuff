@@ -1,33 +1,52 @@
 package svitoos.OCStuff;
 
-import li.cil.oc.api.Network;
+import li.cil.oc.api.internal.Tablet;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.machine.Machine;
 import li.cil.oc.api.network.EnvironmentHost;
-import li.cil.oc.api.prefab.ManagedEnvironment;
-import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.internal.Rotatable;
+import li.cil.oc.api.network.Message;
+import li.cil.oc.server.component.UpgradeNavigation;
+import li.cil.oc.util.BlockPosition;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class UpgradeUltimateNavigationEnv extends ManagedEnvironment {
+public class UpgradeUltimateNavigationEnv extends UpgradeNavigation {
   private final EnvironmentHost host;
 
   public UpgradeUltimateNavigationEnv(EnvironmentHost host) {
+    super(host);
     this.host = host;
-    setNode(
-        Network.newNode(this, Visibility.Network)
-            .withComponent("ultimate_navigation")
-            .withConnector()
-            .create());
   }
 
   @Callback(doc = "function():number, number, number -- Get the current absolute position of the robot.")
+  @Override
   public Object[] getPosition(Context context, Arguments arguments) {
     return new Object[] {host.xPosition(), host.yPosition(), host.zPosition()};
   }
 
-  @Callback(doc = "function():number -- Get the current orientation of the robot.")
-  public Object[] getFacing(Context context, Arguments arguments) {
-    return new Object[]{((Rotatable)host).facing().ordinal()};
+  @Callback(doc = "function():number -- Get the operational range of the navigation upgrade.")
+  @Override
+  public Object[] getRange(Context context, Arguments arguments) {
+    return new Object[]{Integer.MAX_VALUE};
+  }
+
+  @Override
+  public void onMessage(Message message) {
+    super.onMessage(message);
+    if (message.name().equals("tablet.use")) {
+      if (message.source().host() instanceof Machine) {
+        Machine machine = (Machine) message.source().host();
+        if (machine.host() instanceof Tablet) {
+          if (message.data().length == 8 && message.data()[3] instanceof BlockPosition && message.data()[0] instanceof NBTTagCompound) {
+            NBTTagCompound nbt = (NBTTagCompound)  message.data()[0];
+            BlockPosition blockPos = (BlockPosition) message.data()[3];
+            nbt.setInteger("posX", blockPos.x());
+            nbt.setInteger("posY", blockPos.y());
+            nbt.setInteger("posZ", blockPos.z());
+          }
+        }
+      }
+    }
   }
 }
