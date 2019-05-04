@@ -1,4 +1,4 @@
-package svitoos.OCStuff;
+package svitoos.OCStuff.component;
 
 import li.cil.oc.api.internal.Tablet;
 import li.cil.oc.api.machine.Arguments;
@@ -11,15 +11,16 @@ import li.cil.oc.server.component.UpgradeNavigation;
 import li.cil.oc.util.BlockPosition;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class UpgradeUltimateNavigationEnv extends UpgradeNavigation {
+public class UpgradeUltimateNavigation extends UpgradeNavigation {
   private final EnvironmentHost host;
 
-  public UpgradeUltimateNavigationEnv(EnvironmentHost host) {
+  public UpgradeUltimateNavigation(EnvironmentHost host) {
     super(host);
     this.host = host;
   }
 
-  @Callback(doc = "function():number, number, number -- Get the current absolute position of the robot.")
+  @Callback(
+      doc = "function():number, number, number -- Get the current absolute position of the robot.")
   @Override
   public Object[] getPosition(Context context, Arguments arguments) {
     return new Object[] {host.xPosition(), host.yPosition(), host.zPosition()};
@@ -28,7 +29,7 @@ public class UpgradeUltimateNavigationEnv extends UpgradeNavigation {
   @Callback(doc = "function():number -- Get the operational range of the navigation upgrade.")
   @Override
   public Object[] getRange(Context context, Arguments arguments) {
-    return new Object[]{Integer.MAX_VALUE};
+    return new Object[] {Integer.MAX_VALUE};
   }
 
   @Override
@@ -38,8 +39,10 @@ public class UpgradeUltimateNavigationEnv extends UpgradeNavigation {
       if (message.source().host() instanceof Machine) {
         Machine machine = (Machine) message.source().host();
         if (machine.host() instanceof Tablet) {
-          if (message.data().length == 8 && message.data()[3] instanceof BlockPosition && message.data()[0] instanceof NBTTagCompound) {
-            NBTTagCompound nbt = (NBTTagCompound)  message.data()[0];
+          if (message.data().length == 8
+              && message.data()[3] instanceof BlockPosition
+              && message.data()[0] instanceof NBTTagCompound) {
+            NBTTagCompound nbt = (NBTTagCompound) message.data()[0];
             BlockPosition blockPos = (BlockPosition) message.data()[3];
             nbt.setInteger("posX", blockPos.x());
             nbt.setInteger("posY", blockPos.y());

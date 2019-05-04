@@ -3,7 +3,7 @@ package svitoos.OCStuff;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import svitoos.OCStuff.CommonProxy;
+import svitoos.OCStuff.item.UpgradeUltimateNavigation;
 
 public class ClientProxy extends CommonProxy {
 

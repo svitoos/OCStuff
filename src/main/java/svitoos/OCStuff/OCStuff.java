@@ -34,8 +34,6 @@ public class OCStuff {
       serverSide = "svitoos.OCStuff.CommonProxy")
   public static CommonProxy proxy;
 
-  public static UpgradeUltimateNavigationItem itemUltimateNavigationUpgrade;
-
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent e) {
     logger = LogManager.getLogger(MOD_ID, new StringFormatterMessageFactory());
@@ -54,16 +52,13 @@ public class OCStuff {
   }
 
   @Mod.EventHandler
-  public void serverLoad(FMLServerStartingEvent event) {
-  }
+  public void serverLoad(FMLServerStartingEvent event) {}
 
   @Mod.EventHandler
-  public void serverStart(FMLServerAboutToStartEvent event) {
-  }
+  public void serverStart(FMLServerAboutToStartEvent event) {}
 
   @Mod.EventHandler
-  public void serverStop(FMLServerStoppedEvent event) {
-  }
+  public void serverStop(FMLServerStoppedEvent event) {}
 
   static void info(String format, Object... data) {
     logger.log(Level.INFO, format, data);

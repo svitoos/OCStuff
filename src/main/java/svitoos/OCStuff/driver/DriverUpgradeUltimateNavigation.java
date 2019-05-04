@@ -1,22 +1,23 @@
-package svitoos.OCStuff;
+package svitoos.OCStuff.driver;
 
 import li.cil.oc.api.driver.item.HostAware;
 import li.cil.oc.api.driver.item.Slot;
-import li.cil.oc.api.internal.Drone;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.prefab.DriverItem;
 import net.minecraft.item.ItemStack;
+import svitoos.OCStuff.init.Items;
+import svitoos.OCStuff.component.UpgradeUltimateNavigation;
 
-public class UpgradeUltimateNavigationDriver extends DriverItem implements HostAware {
+public class DriverUpgradeUltimateNavigation extends DriverItem implements HostAware {
 
-  UpgradeUltimateNavigationDriver() {
-    super(new ItemStack(OCStuff.itemUltimateNavigationUpgrade));
+  public DriverUpgradeUltimateNavigation() {
+    super(new ItemStack(Items.ultimateNavigationUpgrade));
   }
 
   @Override
   public ManagedEnvironment createEnvironment(ItemStack stack, EnvironmentHost host) {
-    return new UpgradeUltimateNavigationEnv(host);
+    return new UpgradeUltimateNavigation(host);
   }
 
   @Override
@@ -26,8 +27,7 @@ public class UpgradeUltimateNavigationDriver extends DriverItem implements HostA
 
   @Override
   public boolean worksWith(ItemStack stack, Class<? extends EnvironmentHost> host) {
-    return worksWith(stack)
-        && (isRotatable(host));
+    return worksWith(stack) && (isRotatable(host));
   }
 
   @Override

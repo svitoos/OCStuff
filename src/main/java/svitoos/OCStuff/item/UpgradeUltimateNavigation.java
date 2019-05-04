@@ -1,12 +1,13 @@
-package svitoos.OCStuff;
+package svitoos.OCStuff.item;
 
 import li.cil.oc.api.CreativeTab;
 
 import net.minecraft.item.Item;
+import svitoos.OCStuff.OCStuff;
 
-public class UpgradeUltimateNavigationItem extends Item {
+public class UpgradeUltimateNavigation extends Item {
 
-  public UpgradeUltimateNavigationItem() {
+  public UpgradeUltimateNavigation() {
     setCreativeTab(CreativeTab.instance);
     setUnlocalizedName("UpgradeUltimateNavigation");
     setTextureName(OCStuff.MOD_ID + ":" + "UpgradeUltimateNavigation");
