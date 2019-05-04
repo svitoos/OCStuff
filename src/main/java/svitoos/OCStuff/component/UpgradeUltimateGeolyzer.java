@@ -21,8 +21,20 @@ import scala.runtime.AbstractFunction1;
 import svitoos.OCStuff.Config;
 
 public class UpgradeUltimateGeolyzer extends Geolyzer {
+  private final Map<String, String> deviceInfo;
+
   public UpgradeUltimateGeolyzer(EnvironmentHost host) {
     super(host);
+    deviceInfo = new HashMap<>();
+    deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
+    deviceInfo.put(DeviceAttribute.Description, "Ultimate Geolyzer Upgrade");
+    deviceInfo.put(DeviceAttribute.Vendor, "Scrag Technologies");
+    deviceInfo.put(DeviceAttribute.Product, "Terrain Analyzer MkIII");
+  }
+
+  @Override
+  public Map<String, String> getDeviceInfo() {
+    return deviceInfo;
   }
 
   @Callback(

@@ -1,5 +1,7 @@
 package svitoos.OCStuff.component;
 
+import java.util.HashMap;
+import java.util.Map;
 import li.cil.oc.api.internal.Tablet;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -13,10 +15,21 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class UpgradeUltimateNavigation extends UpgradeNavigation {
   private final EnvironmentHost host;
+  private final Map<String, String> deviceInfo;
 
   public UpgradeUltimateNavigation(EnvironmentHost host) {
     super(host);
     this.host = host;
+    deviceInfo = new HashMap<>();
+    deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
+    deviceInfo.put(DeviceAttribute.Description, "Ultimate Navigation Upgrade");
+    deviceInfo.put(DeviceAttribute.Vendor, "Scrag Technologies");
+    deviceInfo.put(DeviceAttribute.Product, "PathFinder v4");
+  }
+
+  @Override
+  public Map<String, String> getDeviceInfo() {
+    return deviceInfo;
   }
 
   @Callback(
