@@ -13,6 +13,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppedEvent;
+import svitoos.OCStuff.component.UpgradeEnderlink;
 
 @Mod(
     modid = OCStuff.MOD_ID,
@@ -55,10 +56,14 @@ public class OCStuff {
   public void serverLoad(FMLServerStartingEvent event) {}
 
   @Mod.EventHandler
-  public void serverStart(FMLServerAboutToStartEvent event) {}
+  public void serverStart(FMLServerAboutToStartEvent event) {
+    UpgradeEnderlink.init();
+  }
 
   @Mod.EventHandler
-  public void serverStop(FMLServerStoppedEvent event) {}
+  public void serverStop(FMLServerStoppedEvent event) {
+    UpgradeEnderlink.cleanup();
+  }
 
   static void info(String format, Object... data) {
     logger.log(Level.INFO, format, data);
