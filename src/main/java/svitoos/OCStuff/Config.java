@@ -12,6 +12,8 @@ public class Config {
 
   public static double geolyzerCostPerRange;
 
+  public static double enderlinkTransferCost;
+
   static void init(File file) {
     configuration = new Configuration(file, true);
     configuration.load();
@@ -36,5 +38,14 @@ public class Config {
                 "How much energy is consumed when the Geolyzer analyzes a ranged block. (geolyzerScan + range * costPerRange)")
             .getDouble();
     configuration.save();
+
+    enderlinkTransferCost =
+        configuration
+            .get(
+                "enderlink",
+                "transferCost",
+                100.0,
+                "How much energy is consumed when the Enderlink transfers item/fluid.")
+            .getDouble();
   }
 }
