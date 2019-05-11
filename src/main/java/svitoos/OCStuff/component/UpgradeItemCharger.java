@@ -37,7 +37,7 @@ public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo
     this.host = host;
     setNode(
         Network.newNode(this, Visibility.Network)
-            .withComponent("charger", Visibility.Neighbors)
+            .withComponent("itemcharger", Visibility.Neighbors)
             .withConnector()
             .create());
   }
