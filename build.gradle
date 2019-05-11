@@ -41,19 +41,29 @@ minecraft {
     replace "/*@MCVERSIONDEP@*/", ", acceptedMinecraftVersions = \"${config.mod.acceptedMinecraftVersions}\""
 }
 
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-    }
-}
-
 repositories {
     mavenCentral()
     maven { url = "http://maven.cil.li/" }
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
+}
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = 'build/classes/main'
+        compileClasspath += [configurations.provided]
+    }
 }
 
 dependencies {
     compile "li.cil.oc:OpenComputers:${config.oc.version}:dev"
+    provided "net.industrial-craft:industrialcraft-2:${config.ic2.version}:dev"
 }
 
 processResources {
