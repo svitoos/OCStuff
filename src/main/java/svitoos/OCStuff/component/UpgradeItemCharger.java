@@ -56,7 +56,8 @@ public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo
   public void update() {
     super.update();
     if (charge && host.world().getTotalWorldTime() % Settings.get().tickFrequency() == 0) {
-      ItemStack stack = ((Agent) host).equipmentInventory().getStackInSlot(0);
+      Agent agent = (Agent) host;
+      ItemStack stack = agent.mainInventory().getStackInSlot(agent.selectedSlot());
       if (stack != null && stack.stackSize > 0 && ItemCharge.canCharge(stack)) {
         final double charge = Settings.get().chargeRateTablet() * Settings.get().tickFrequency();
         Connector connector = (Connector) node();
@@ -72,7 +73,7 @@ public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo
 
   @Callback(
       doc =
-          "charge([enable:boolean]):boolean --  Activate or deactivate tool charging. Returns whether the charger is currently charging tool.")
+          "charge([enable:boolean]):boolean --  Activate or deactivate item charging. Returns whether the charger is currently charging item.")
   public Object[] charge(Context context, Arguments arguments) {
     if (arguments.count() > 0) {
       charge = arguments.checkBoolean(0);
