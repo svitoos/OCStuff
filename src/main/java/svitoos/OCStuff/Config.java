@@ -37,8 +37,8 @@ public class Config {
     geolyzerCostPerRange =
         configuration
             .get(
-                "costPerRange",
                 "geolyzer",
+                "costPerRange",
                 1.0,
                 "How much energy is consumed when the Geolyzer analyzes a ranged block. (geolyzerScan + range * costPerRange)")
             .getDouble();
