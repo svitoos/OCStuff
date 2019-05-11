@@ -16,7 +16,7 @@ public final class Items {
 
   public static UpgradeUltimateNavigation ultimateNavigationUpgrade;
   public static UpgradeUltimateGeolyzer ultimateGeolyzerUpgrade;
-  public static UpgradeItemCharger chargerUpgrade;
+  public static UpgradeItemCharger itemChargerUpgrade;
   public static UpgradeCropnalyzer cropnalyzerUpgrade;
 
   private Items() {}
@@ -64,8 +64,23 @@ public final class Items {
           li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
     }
 
-    chargerUpgrade = new UpgradeItemCharger();
-    GameRegistry.registerItem(chargerUpgrade, "chargerUpgrade");
+    itemChargerUpgrade = new UpgradeItemCharger();
+    GameRegistry.registerItem(itemChargerUpgrade, "itemChargerUpgrade");
+    if (Config.itemChargerUpgradeRecipe) {
+      GameRegistry.addRecipe(
+          new ItemStack(itemChargerUpgrade),
+          "x x",
+          "cic",
+          "xpx",
+          'x',
+          net.minecraft.init.Items.diamond,
+          'c',
+          li.cil.oc.api.Items.get("chip3").createItemStack(1),
+          'i',
+          li.cil.oc.api.Items.get("charger").createItemStack(1),
+          'p',
+          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+    }
 
     if (Mods.IndustrialCraft2()) {
       svitoos.OCStuff.driver.ic2.init.Items.init();

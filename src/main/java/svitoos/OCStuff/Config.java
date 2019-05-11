@@ -12,6 +12,9 @@ public class Config {
 
   public static double geolyzerCostPerRange;
 
+  public static boolean itemChargerUpgradeRecipe;
+  public static int itemChargerUpgradeTier;
+
   public static boolean integrationIndustrialCraft2;
 
   public static boolean cropnalyzerUpgradeEnabled;
@@ -42,6 +45,9 @@ public class Config {
                 1.0,
                 "How much energy is consumed when the Geolyzer analyzes a ranged block. (geolyzerScan + range * costPerRange)")
             .getDouble();
+
+    itemChargerUpgradeRecipe = configuration.getBoolean("UpgradeItemCharger", "recipe", true, "");
+    itemChargerUpgradeTier = configuration.getInt("UpgradeItemCharger", "tier", 1, 0, 2, "");
 
     integrationIndustrialCraft2 =
         configuration.getBoolean("IndustrialCraft2", "integration", true, "");

@@ -7,13 +7,14 @@ import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.prefab.DriverItem;
 import net.minecraft.item.ItemStack;
+import svitoos.OCStuff.Config;
 import svitoos.OCStuff.component.UpgradeItemCharger;
 import svitoos.OCStuff.init.Items;
 
 public class DriverUpgradeItemCharger extends DriverItem implements HostAware {
 
   public DriverUpgradeItemCharger() {
-    super(new ItemStack(Items.chargerUpgrade));
+    super(new ItemStack(Items.itemChargerUpgrade));
   }
 
   @Override
@@ -33,6 +34,6 @@ public class DriverUpgradeItemCharger extends DriverItem implements HostAware {
 
   @Override
   public int tier(ItemStack stack) {
-    return 1;
+    return Config.itemChargerUpgradeTier;
   }
 }
