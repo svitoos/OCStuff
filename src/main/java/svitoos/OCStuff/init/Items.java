@@ -5,7 +5,6 @@ import li.cil.oc.api.API;
 import net.minecraft.item.ItemStack;
 import svitoos.OCStuff.Config;
 import svitoos.OCStuff.Mods;
-import svitoos.OCStuff.driver.DriverUpgradeItemCharger;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateGeolyzer;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateNavigation;
 import svitoos.OCStuff.item.UpgradeCropnalyzer;
@@ -67,7 +66,6 @@ public final class Items {
 
     chargerUpgrade = new UpgradeItemCharger();
     GameRegistry.registerItem(chargerUpgrade, "chargerUpgrade");
-    API.driver.add(new DriverUpgradeItemCharger());
 
     if (Mods.IndustrialCraft2()) {
       svitoos.OCStuff.driver.ic2.init.Items.init();
