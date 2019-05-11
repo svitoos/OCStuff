@@ -12,6 +12,13 @@ public class Config {
 
   public static double geolyzerCostPerRange;
 
+  public static boolean integrationIndustrialCraft2;
+
+  public static boolean cropnalyzerUpgradeEnabled;
+  public static boolean cropnalyzerUpgradeRecipe;
+  public static int cropnalyzerUpgradeTier;
+  public static double[] cropnalyzerScanCost;
+
   static void init(File file) {
     configuration = new Configuration(file, true);
     configuration.load();
@@ -35,6 +42,20 @@ public class Config {
                 1.0,
                 "How much energy is consumed when the Geolyzer analyzes a ranged block. (geolyzerScan + range * costPerRange)")
             .getDouble();
+
+    integrationIndustrialCraft2 =
+        configuration.getBoolean("IndustrialCraft2", "integration", true, "");
+
+    cropnalyzerUpgradeEnabled = configuration.getBoolean("UpgradeCropnalyzer", "item", true, "");
+    cropnalyzerUpgradeRecipe = configuration.getBoolean("UpgradeCropnalyzer", "recipe", true, "");
+    cropnalyzerUpgradeTier = configuration.getInt("UpgradeCropnalyzer", "tier", 1, 0, 2, "");
+
+    cropnalyzerScanCost =
+        configuration
+            .get("cropnalyzer", "scanCost", new double[] {0, 40, 360, 3600}, "eu 0, 100, 900, 9000")
+            .getDoubleList();
+
+
     configuration.save();
   }
 }

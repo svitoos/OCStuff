@@ -4,8 +4,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import li.cil.oc.api.API;
 import net.minecraft.item.ItemStack;
 import svitoos.OCStuff.Config;
+import svitoos.OCStuff.Mods;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateGeolyzer;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateNavigation;
+import svitoos.OCStuff.item.UpgradeCropnalyzer;
 import svitoos.OCStuff.item.UpgradeUltimateGeolyzer;
 import svitoos.OCStuff.item.UpgradeUltimateNavigation;
 
@@ -13,6 +15,7 @@ public final class Items {
 
   public static UpgradeUltimateNavigation ultimateNavigationUpgrade;
   public static UpgradeUltimateGeolyzer ultimateGeolyzerUpgrade;
+  public static UpgradeCropnalyzer cropnalyzerUpgrade;
 
   private Items() {}
 
@@ -57,6 +60,10 @@ public final class Items {
           li.cil.oc.api.Items.get("interweb").createItemStack(1),
           'p',
           li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+    }
+
+    if (Mods.IndustrialCraft2()) {
+      svitoos.OCStuff.driver.ic2.init.Items.init();
     }
   }
 }
