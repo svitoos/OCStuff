@@ -52,7 +52,7 @@ public class UpgradeCropnalyzer extends ManagedEnvironment implements DeviceInfo
   public Object[] analyze(Context context, Arguments arguments) {
     Agent agent = (Agent) host;
     ItemStack stack = agent.mainInventory().getStackInSlot(agent.selectedSlot());
-    if (stack.getItem() instanceof ItemCropSeed && stack.getTagCompound() != null) {
+    if (stack != null && stack.getItem() instanceof ItemCropSeed) {
       final int scanLevel = Math.max(ItemCropSeed.getScannedFromStack(stack), 0);
       if (scanLevel < 4) {
         if (!((Connector) node()).tryChangeBuffer(-Config.cropnalyzerScanCost[scanLevel])) {
@@ -66,13 +66,13 @@ public class UpgradeCropnalyzer extends ManagedEnvironment implements DeviceInfo
   }
 
   @Callback(doc="Returns the humidity bonus for a biome.")
-  public Object[] getHumidityBiomeBonus() {
-    return new Object[] {false, Crops.instance.getHumidityBiomeBonus(getBiome())};
+  public Object[] getHumidityBiomeBonus(Context context, Arguments arguments) {
+    return new Object[] {Crops.instance.getHumidityBiomeBonus(getBiome())};
   }
 
   @Callback(doc="Returns the nutrient bonus for a biome.")
-  public Object[] getNutrientBiomeBonus() {
-    return new Object[] {false, Crops.instance.getNutrientBiomeBonus(getBiome())};
+  public Object[] getNutrientBiomeBonus(Context context, Arguments arguments) {
+    return new Object[] {Crops.instance.getNutrientBiomeBonus(getBiome())};
   }
 
   private BiomeGenBase getBiome() {

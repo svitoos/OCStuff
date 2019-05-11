@@ -47,14 +47,19 @@ public class Config {
         configuration.getBoolean("IndustrialCraft2", "integration", true, "");
 
     cropnalyzerUpgradeEnabled = configuration.getBoolean("UpgradeCropnalyzer", "item", true, "");
-    cropnalyzerUpgradeRecipe = configuration.getBoolean("UpgradeCropnalyzer", "recipe", true, "");
+    cropnalyzerUpgradeRecipe =
+        configuration.getBoolean(
+            "UpgradeCropnalyzer", "recipe", true, "Add recipe for Cropnalyzer Upgrade");
     cropnalyzerUpgradeTier = configuration.getInt("UpgradeCropnalyzer", "tier", 1, 0, 2, "");
 
     cropnalyzerScanCost =
         configuration
-            .get("cropnalyzer", "scanCost", new double[] {0, 40, 360, 3600}, "eu 0, 100, 900, 9000")
+            .get(
+                "cropnalyzer",
+                "scanCost",
+                new double[] {0, 40, 360, 3600},
+                "[Default: 0 40 360 3600]")
             .getDoubleList();
-
 
     configuration.save();
   }
