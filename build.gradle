@@ -80,7 +80,9 @@ processResources {
         /* replace modid and modname*/
         "modid": config.mod.id, "name": config.mod.name,
         /* replace description */
-        "description": config.mod.description
+        "description": config.mod.description,
+        /* replace url */
+        "url": config.mod.url
     }
 
     // copy everything else, thats not the mcmod.info
