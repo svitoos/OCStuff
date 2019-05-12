@@ -43,6 +43,7 @@ def getVersionFromGitTag() {
     exec {
       commandLine 'git', 'describe'
       standardOutput = stdout
+      errorOutput = null
     }
     return stdout.toString().trim()
   } catch (Throwable e) {
@@ -92,7 +93,7 @@ configurations {
 sourceSets {
     main {
         output.resourcesDir = 'build/classes/main'
-        compileClasspath += [configurations.provided]
+        compileClasspath += configurations.provided
     }
 }
 
