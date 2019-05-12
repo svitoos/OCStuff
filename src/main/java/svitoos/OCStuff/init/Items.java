@@ -1,13 +1,9 @@
 package svitoos.OCStuff.init;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import li.cil.oc.api.API;
 import net.minecraft.item.ItemStack;
 import svitoos.OCStuff.Config;
 import svitoos.OCStuff.Mods;
-import svitoos.OCStuff.driver.DriverUpgradeEnderlink;
-import svitoos.OCStuff.driver.DriverUpgradeUltimateGeolyzer;
-import svitoos.OCStuff.driver.DriverUpgradeUltimateNavigation;
 import svitoos.OCStuff.item.UpgradeUltimateGeolyzer;
 import svitoos.OCStuff.item.UpgradeUltimateNavigation;
 import svitoos.OCStuff.item.UpgradeEnderlink;
@@ -27,7 +23,6 @@ public final class Items {
   public static void init() {
     ultimateNavigationUpgrade = new UpgradeUltimateNavigation();
     GameRegistry.registerItem(ultimateNavigationUpgrade, "ultimateNavigationUpgrade");
-    API.driver.add(new DriverUpgradeUltimateNavigation());
     if (Config.regRecipeUpgradeUltimateNavigation) {
       GameRegistry.addRecipe(
           new ItemStack(ultimateNavigationUpgrade),
@@ -48,7 +43,6 @@ public final class Items {
 
     ultimateGeolyzerUpgrade = new UpgradeUltimateGeolyzer();
     GameRegistry.registerItem(ultimateGeolyzerUpgrade, "ultimateGeolyzerUpgrade");
-    API.driver.add(new DriverUpgradeUltimateGeolyzer());
     if (Config.regRecipeUpgradeUltimateGeolyzer) {
       GameRegistry.addRecipe(
           new ItemStack(ultimateGeolyzerUpgrade),
