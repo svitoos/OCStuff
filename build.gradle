@@ -24,7 +24,42 @@ file "build.properties" withReader {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = config.mod.version
+def getGitRef() {
+  try {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+      commandLine 'git', 'rev-parse', '--short', 'HEAD'
+      standardOutput = stdout
+    }
+    return stdout.toString().trim()
+  } catch (Throwable e) {
+    return "unknown"
+  }
+}
+
+def getVersionFromGitTag() {
+  try {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+      commandLine 'git', 'describe'
+      standardOutput = stdout
+    }
+    return stdout.toString().trim()
+  } catch (Throwable e) {
+    return "unknown"
+  }
+}
+
+def getVersion() {
+  def vGit = getVersionFromGitTag()
+  def vConf = "${config.mod.version}"
+  if (vGit == ("v" + vConf)) {
+    return vConf
+  }
+  return vConf + "+" + getGitRef()
+}
+
+version = getVersion()
 group = config.mod.group
 archivesBaseName = config.mod.archivesBaseName
 
@@ -41,19 +76,29 @@ minecraft {
     replace "/*@MCVERSIONDEP@*/", ", acceptedMinecraftVersions = \"${config.mod.acceptedMinecraftVersions}\""
 }
 
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-    }
-}
-
 repositories {
     mavenCentral()
     maven { url = "http://maven.cil.li/" }
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
+}
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = 'build/classes/main'
+        compileClasspath += [configurations.provided]
+    }
 }
 
 dependencies {
     compile "li.cil.oc:OpenComputers:${config.oc.version}:dev"
+    provided "net.industrial-craft:industrialcraft-2:${config.ic2.version}:dev"
 }
 
 processResources {
@@ -70,7 +115,9 @@ processResources {
         /* replace modid and modname*/
         "modid": config.mod.id, "name": config.mod.name,
         /* replace description */
-        "description": config.mod.description
+        "description": config.mod.description,
+        /* replace url */
+        "url": config.mod.url
     }
 
     // copy everything else, thats not the mcmod.info

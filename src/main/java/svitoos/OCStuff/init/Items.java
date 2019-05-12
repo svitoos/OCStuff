@@ -4,18 +4,23 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import li.cil.oc.api.API;
 import net.minecraft.item.ItemStack;
 import svitoos.OCStuff.Config;
+import svitoos.OCStuff.Mods;
 import svitoos.OCStuff.driver.DriverUpgradeEnderlink;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateGeolyzer;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateNavigation;
-import svitoos.OCStuff.item.UpgradeEnderlink;
 import svitoos.OCStuff.item.UpgradeUltimateGeolyzer;
 import svitoos.OCStuff.item.UpgradeUltimateNavigation;
+import svitoos.OCStuff.item.UpgradeEnderlink;
+import svitoos.OCStuff.item.UpgradeItemCharger;
+import svitoos.OCStuff.item.UpgradeCropnalyzer;
 
 public final class Items {
 
   public static UpgradeUltimateNavigation ultimateNavigationUpgrade;
   public static UpgradeUltimateGeolyzer ultimateGeolyzerUpgrade;
   public static UpgradeEnderlink enderlinkUpgrade;
+  public static UpgradeItemCharger itemChargerUpgrade;
+  public static UpgradeCropnalyzer cropnalyzerUpgrade;
 
   private Items() {}
 
@@ -65,5 +70,28 @@ public final class Items {
     enderlinkUpgrade = new UpgradeEnderlink();
     GameRegistry.registerItem(enderlinkUpgrade, "enderlinkUpgrade");
     API.driver.add(new DriverUpgradeEnderlink());
+
+    itemChargerUpgrade = new UpgradeItemCharger();
+    GameRegistry.registerItem(itemChargerUpgrade, "itemChargerUpgrade");
+    if (Config.itemChargerUpgradeRecipe) {
+      GameRegistry.addRecipe(
+          new ItemStack(itemChargerUpgrade),
+          "x x",
+          "cic",
+          "xpx",
+          'x',
+          net.minecraft.init.Items.diamond,
+          'c',
+          li.cil.oc.api.Items.get("chip3").createItemStack(1),
+          'i',
+          li.cil.oc.api.Items.get("charger").createItemStack(1),
+          'p',
+          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+    }
+
+    if (Mods.IndustrialCraft2()) {
+      svitoos.OCStuff.driver.ic2.init.Items.init();
+    }
+
   }
 }

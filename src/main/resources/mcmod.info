@@ -5,7 +5,7 @@
     "description": "${description}",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/svitoos/OCStuff",
+    "url": "${url}",
     "updateUrl": "",
     "authorList": ["svitoos"],
     "credits": "",
