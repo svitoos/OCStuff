@@ -12,6 +12,8 @@ public class Config {
 
   public static double geolyzerCostPerRange;
 
+  public static boolean enderlinkUpgradeRecipe;
+  public static int enderlinkUpgradeTier;
   public static double enderlinkTransferCost;
 
   public static boolean itemChargerUpgradeRecipe;
@@ -47,6 +49,12 @@ public class Config {
                 1.0,
                 "How much energy is consumed when the Geolyzer analyzes a ranged block. (geolyzerScan + range * costPerRange)")
             .getDouble();
+
+    // Enderlink Upgrade
+
+    enderlinkUpgradeRecipe=configuration.getBoolean(
+        "UpgradeEnderlink", "recipe", true, "Add recipe for Enderlink Upgrade");
+    enderlinkUpgradeTier=configuration.getInt("UpgradeEnderlnk", "tier", 2, 0, 2, "");
     enderlinkTransferCost =
         configuration
             .get(

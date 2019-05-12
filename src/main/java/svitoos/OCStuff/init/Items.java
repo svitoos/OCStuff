@@ -69,7 +69,23 @@ public final class Items {
 
     enderlinkUpgrade = new UpgradeEnderlink();
     GameRegistry.registerItem(enderlinkUpgrade, "enderlinkUpgrade");
-    API.driver.add(new DriverUpgradeEnderlink());
+    if (Config.enderlinkUpgradeRecipe) {
+      GameRegistry.addRecipe(
+          new ItemStack(enderlinkUpgrade),
+          "xgx",
+          "cic",
+          "xpx",
+          'g',
+          li.cil.oc.api.Items.get("ineventory_contoller").createItemStack(1),
+          'x',
+          net.minecraft.init.Items.ender_eye,
+          'c',
+          li.cil.oc.api.Items.get("chip3").createItemStack(1),
+          'i',
+          li.cil.oc.api.Items.get("interweb").createItemStack(1),
+          'p',
+          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+    }
 
     itemChargerUpgrade = new UpgradeItemCharger();
     GameRegistry.registerItem(itemChargerUpgrade, "itemChargerUpgrade");

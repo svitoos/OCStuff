@@ -71,7 +71,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return deviceInfo;
   }
 
-  @Callback(doc = "remote([name:string[, owner:string]]):string,string")
+  @Callback(doc = "remote([name:string[, owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
   public Object[] remote(Context context, Arguments arguments) {
     if (arguments.count() > 0) {
       final String name = arguments.checkAny(0) == null ? null : arguments.checkString(0);
@@ -89,7 +89,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
 
   @Callback(
       doc =
-          "transferItem([count:number=64]):number[,string] -- Transfer some items into the remote enderlink.")
+          "transferItem([count:number=64]):number[,string] -- Transfers some items from selected slot into the remote enderlink.")
   public Object[] transferItem(Context context, Arguments arguments) {
     final int count = new ExtendedArguments(arguments).optItemCount(0, 64);
     UpgradeEnderlink remote = getRemote();
@@ -118,7 +118,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
 
   @Callback(
       doc =
-          "transferFluid([amount:number=1000]):number[,string] -- Transfer some fluids into the remote enderlink.")
+          "transferFluid([amount:number=1000]):number[,string] -- Transfers some fluids from selected tank into the remote enderlink.")
   public Object[] transferFluid(Context context, Arguments arguments) {
     final int amount =
         new ExtendedArguments(arguments).optFluidCount(0, FluidContainerRegistry.BUCKET_VOLUME);
