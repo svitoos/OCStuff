@@ -2,6 +2,7 @@ package svitoos.OCStuff.init.ic2;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ic2.core.Ic2Items;
+import ic2.core.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import svitoos.OCStuff.Config;
 import svitoos.OCStuff.item.UpgradeCropnalyzer;
@@ -21,7 +22,7 @@ public final class Items {
           'c',
           li.cil.oc.api.Items.get("chip2").createItemStack(1),
           'i',
-          Ic2Items.cropnalyzer,
+          StackUtil.copyWithWildCard(Ic2Items.cropnalyzer),
           'p',
           li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
     }
