@@ -7,7 +7,6 @@ import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.prefab.DriverItem;
 import net.minecraft.item.ItemStack;
 import svitoos.OCStuff.Config;
-import svitoos.OCStuff.component.UpgradeEnderlink;
 import svitoos.OCStuff.init.Items;
 
 public class DriverUpgradeEnderlink extends DriverItem implements HostAware {

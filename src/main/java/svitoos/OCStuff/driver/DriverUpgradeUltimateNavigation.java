@@ -6,8 +6,8 @@ import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.prefab.DriverItem;
 import net.minecraft.item.ItemStack;
+import svitoos.OCStuff.Config;
 import svitoos.OCStuff.init.Items;
-import svitoos.OCStuff.component.UpgradeUltimateNavigation;
 
 public class DriverUpgradeUltimateNavigation extends DriverItem implements HostAware {
 
@@ -32,6 +32,6 @@ public class DriverUpgradeUltimateNavigation extends DriverItem implements HostA
 
   @Override
   public int tier(ItemStack stack) {
-    return 0;
+    return Config.ultimateNavigationUpgradeTier;
   }
 }

@@ -23,7 +23,7 @@ public final class Items {
   public static void init() {
     ultimateNavigationUpgrade = new UpgradeUltimateNavigation();
     GameRegistry.registerItem(ultimateNavigationUpgrade, "ultimateNavigationUpgrade");
-    if (Config.regRecipeUpgradeUltimateNavigation) {
+    if (Config.ultimateNavigationUpgradeRecipe) {
       GameRegistry.addRecipe(
           new ItemStack(ultimateNavigationUpgrade),
           "xgx",
@@ -43,7 +43,7 @@ public final class Items {
 
     ultimateGeolyzerUpgrade = new UpgradeUltimateGeolyzer();
     GameRegistry.registerItem(ultimateGeolyzerUpgrade, "ultimateGeolyzerUpgrade");
-    if (Config.regRecipeUpgradeUltimateGeolyzer) {
+    if (Config.ultimateGeolyzerUpgradeRecipe) {
       GameRegistry.addRecipe(
           new ItemStack(ultimateGeolyzerUpgrade),
           "xgx",
@@ -100,7 +100,7 @@ public final class Items {
     }
 
     if (Mods.IndustrialCraft2()) {
-      svitoos.OCStuff.driver.ic2.init.Items.init();
+      svitoos.OCStuff.init.ic2.Items.init();
     }
 
   }

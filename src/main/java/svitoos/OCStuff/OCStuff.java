@@ -13,7 +13,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppedEvent;
-import svitoos.OCStuff.component.UpgradeEnderlink;
+import svitoos.OCStuff.driver.UpgradeEnderlink;
 
 @Mod(
     modid = OCStuff.MOD_ID,

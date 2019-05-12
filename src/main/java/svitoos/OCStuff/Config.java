@@ -7,13 +7,17 @@ import net.minecraftforge.common.config.Configuration;
 public class Config {
   private static Configuration configuration;
 
-  public static boolean regRecipeUpgradeUltimateNavigation;
-  public static boolean regRecipeUpgradeUltimateGeolyzer;
+  public static boolean ultimateNavigationUpgradeRecipe;
+  public static int ultimateNavigationUpgradeTier;
+
+  public static boolean ultimateGeolyzerUpgradeRecipe;
+  public static int ultimateGeolyzerUpgradeTier;
 
   public static double geolyzerCostPerRange;
 
   public static boolean enderlinkUpgradeRecipe;
   public static int enderlinkUpgradeTier;
+
   public static double enderlinkTransferCost;
 
   public static boolean itemChargerUpgradeRecipe;
@@ -21,25 +25,24 @@ public class Config {
 
   public static boolean integrationIndustrialCraft2;
 
-  public static boolean cropnalyzerUpgradeEnabled;
   public static boolean cropnalyzerUpgradeRecipe;
   public static int cropnalyzerUpgradeTier;
+
   public static double[] cropnalyzerScanCost;
 
   static void init(File file) {
     configuration = new Configuration(file, true);
     configuration.load();
 
-    regRecipeUpgradeUltimateNavigation =
-        configuration.getBoolean(
-            "UpgradeUltimateNavigation",
-            "recipe",
-            true,
-            "Add recipe for Ultimate Navigation Upgrade");
+    // Ultimate Navigation Upgrade
 
-    regRecipeUpgradeUltimateGeolyzer =
-        configuration.getBoolean(
-            "UpgradeUltimateGeolyzer", "recipe", true, "Add recipe for Ultimate Geolyzer Upgrade");
+    ultimateNavigationUpgradeRecipe = getRecipe("UpgradeUltimateNavigation");
+    ultimateNavigationUpgradeTier = getTier("UpgradeUltimateNavigation", 0);
+
+    // Ultimate Geolyzer Upgrade
+
+    ultimateGeolyzerUpgradeRecipe = getRecipe("UpgradeUltimateGeolyzer");
+    ultimateGeolyzerUpgradeTier = getTier("UpgradeUltimateGeolyzer", 0);
 
     geolyzerCostPerRange =
         configuration
@@ -52,9 +55,9 @@ public class Config {
 
     // Enderlink Upgrade
 
-    enderlinkUpgradeRecipe=configuration.getBoolean(
-        "UpgradeEnderlink", "recipe", true, "Add recipe for Enderlink Upgrade");
-    enderlinkUpgradeTier=configuration.getInt("UpgradeEnderlnk", "tier", 2, 0, 2, "");
+    enderlinkUpgradeRecipe = getRecipe("UpgradeEnderlink");
+    enderlinkUpgradeTier = getTier("UpgradeEnderlnk", 2);
+
     enderlinkTransferCost =
         configuration
             .get(
@@ -64,17 +67,20 @@ public class Config {
                 "How much energy is consumed when the Enderlink transfers item/fluid.")
             .getDouble();
 
-    itemChargerUpgradeRecipe = configuration.getBoolean("UpgradeItemCharger", "recipe", true, "");
-    itemChargerUpgradeTier = configuration.getInt("UpgradeItemCharger", "tier", 1, 0, 2, "");
+    // Item Charger Upgrade
+
+    itemChargerUpgradeRecipe = getRecipe("UpgradeItemCharger");
+    itemChargerUpgradeTier = getTier("UpgradeItemCharger", 1);
+
+    // IndustrialCraft2 integration
 
     integrationIndustrialCraft2 =
         configuration.getBoolean("IndustrialCraft2", "integration", true, "");
 
-    cropnalyzerUpgradeEnabled = configuration.getBoolean("UpgradeCropnalyzer", "item", true, "");
-    cropnalyzerUpgradeRecipe =
-        configuration.getBoolean(
-            "UpgradeCropnalyzer", "recipe", true, "Add recipe for Cropnalyzer Upgrade");
-    cropnalyzerUpgradeTier = configuration.getInt("UpgradeCropnalyzer", "tier", 1, 0, 2, "");
+    // Cropnalyzer Upgrade
+
+    cropnalyzerUpgradeRecipe = getRecipe("UpgradeCropnalyzer");
+    cropnalyzerUpgradeTier = getTier("UpgradeCropnalyzer", 1);
 
     cropnalyzerScanCost =
         configuration
@@ -86,5 +92,13 @@ public class Config {
             .getDoubleList();
 
     configuration.save();
+  }
+
+  private static int getTier(String name, int defaultTier) {
+    return configuration.getInt(name, "tier", defaultTier, 0, 2, "");
+  }
+
+  private static boolean getRecipe(String name) {
+    return configuration.getBoolean(name, "recipe", true, "");
   }
 }

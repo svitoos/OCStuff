@@ -1,12 +1,13 @@
 package svitoos.OCStuff.init;
 
-import svitoos.OCStuff.Config;
+import net.minecraftforge.common.MinecraftForge;
 import svitoos.OCStuff.Mods;
+import svitoos.OCStuff.driver.ic2.EventHandlerIndustrialCraft2;
 
 public class Events {
   public static void init() {
     if (Mods.IndustrialCraft2()) {
-      svitoos.OCStuff.driver.ic2.init.Events.init();
+      MinecraftForge.EVENT_BUS.register(new EventHandlerIndustrialCraft2());
     }
   }
 }

@@ -24,7 +24,7 @@ public class DriverCropnalyzer extends DriverItem implements HostAware {
 
   @Override
   public ManagedEnvironment createEnvironment(ItemStack stack, EnvironmentHost host) {
-    if (Mods.IndustrialCraft2() && Config.cropnalyzerUpgradeEnabled) {
+    if (Mods.IndustrialCraft2()) {
       return new UpgradeCropnalyzer(host);
     }
     return null;

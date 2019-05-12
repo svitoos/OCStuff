@@ -6,7 +6,7 @@ import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.prefab.DriverItem;
 import net.minecraft.item.ItemStack;
-import svitoos.OCStuff.component.UpgradeUltimateGeolyzer;
+import svitoos.OCStuff.Config;
 import svitoos.OCStuff.init.Items;
 
 public class DriverUpgradeUltimateGeolyzer extends DriverItem implements HostAware {
@@ -31,6 +31,6 @@ public class DriverUpgradeUltimateGeolyzer extends DriverItem implements HostAwa
 
   @Override
   public int tier(ItemStack stack) {
-    return 0;
+    return Config.ultimateGeolyzerUpgradeTier;
   }
 }

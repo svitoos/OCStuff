@@ -6,6 +6,8 @@ import svitoos.OCStuff.driver.DriverUpgradeEnderlink;
 import svitoos.OCStuff.driver.DriverUpgradeItemCharger;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateGeolyzer;
 import svitoos.OCStuff.driver.DriverUpgradeUltimateNavigation;
+import svitoos.OCStuff.driver.ic2.ConvertCropSeedItem;
+import svitoos.OCStuff.driver.ic2.DriverCropnalyzer;
 
 public final class Drivers {
   public static void init() {
@@ -14,7 +16,8 @@ public final class Drivers {
     API.driver.add(new DriverUpgradeItemCharger());
     API.driver.add(new DriverUpgradeEnderlink());
     if (Mods.IndustrialCraft2()) {
-      svitoos.OCStuff.driver.ic2.init.Drivers.init();
+      API.driver.add(new ConvertCropSeedItem());
+      API.driver.add(new DriverCropnalyzer());
     }
   }
 }
