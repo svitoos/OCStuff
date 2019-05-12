@@ -76,7 +76,7 @@ public final class Items {
           "cic",
           "xpx",
           'g',
-          li.cil.oc.api.Items.get("ineventory_contoller").createItemStack(1),
+          li.cil.oc.api.Items.get("inventoryControllerUpgrade").createItemStack(1),
           'x',
           net.minecraft.init.Items.ender_eye,
           'c',
