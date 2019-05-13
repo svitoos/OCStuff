@@ -82,7 +82,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return new Object[] {remoteName, remoteOwner};
   }
 
-  @Callback(doc = "remoteAvailable():boolean")
+  @Callback(doc = "remoteAvailable():boolean -- Returns whether the remote enderlink is available")
   public Object[] remoteAvailable(Context context, Arguments arguments) {
     return new Object[] {getRemote() != null};
   }
@@ -137,32 +137,32 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return new Object[] {0};
   }
 
-  @Callback(doc = "getName():string")
+  @Callback(doc = "getName():string -- Returns the input channel name.")
   public Object[] getName(Context context, Arguments arguments) {
     return new Object[] {name};
   }
 
-  @Callback(doc = "isPublic():boolean")
+  @Callback(doc = "isPublic(): -- Returns whether the input channel is public")
   public Object[] isPublic(Context context, Arguments arguments) {
     return new Object[] {isPublic};
   }
 
-  @Callback(doc = "isOpen():boolean")
+  @Callback(doc = "isOpen():boolean -- Returns whether the input channel is open")
   public Object[] isOpen(Context context, Arguments arguments) {
     return new Object[] {isOpen()};
   }
 
-  @Callback(doc = "getOwner():string")
+  @Callback(doc = "getOwner():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
   public Object[] getOwner(Context context, Arguments arguments) {
     return new Object[] {getOwnerName()};
   }
 
-  @Callback(doc = "open(name:string[, isPublic:boolean=false]):boolean")
+  @Callback(doc = "open(name:string[, isPublic:boolean=false]):boolean -- Opens the input channel.")
   public Object[] open(Context context, Arguments arguments) {
     return new Object[] {open(arguments.checkString(0), arguments.optBoolean(1, false))};
   }
 
-  @Callback(doc = "close():boolean")
+  @Callback(doc = "close():boolean -- Closes the input channel")
   public Object[] close(Context context, Arguments arguments) {
     return new Object[] {close()};
   }
