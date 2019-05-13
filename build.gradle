@@ -40,10 +40,11 @@ def getGitRef() {
 def getVersionFromGitTag() {
   try {
     def stdout = new ByteArrayOutputStream()
+    def stderr = new ByteArrayOutputStream()
     exec {
-      commandLine 'git', 'describe'
+      commandLine 'git', 'describe', '--exact-match'
       standardOutput = stdout
-      errorOutput = null
+      errorOutput = stderr
     }
     return stdout.toString().trim()
   } catch (Throwable e) {
