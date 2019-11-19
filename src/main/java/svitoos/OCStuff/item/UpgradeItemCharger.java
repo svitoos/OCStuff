@@ -7,8 +7,8 @@ import svitoos.OCStuff.OCStuff;
 public class UpgradeItemCharger extends Item {
 
   public UpgradeItemCharger() {
+    setRegistryName(OCStuff.MOD_ID, "upgrade_item_charger");
     setCreativeTab(CreativeTab.instance);
-    setUnlocalizedName("UpgradeItemCharger");
-    setTextureName(OCStuff.MOD_ID + ":" + "UpgradeItemCharger");
+    setTranslationKey("upgrade_item_charger");
   }
 }

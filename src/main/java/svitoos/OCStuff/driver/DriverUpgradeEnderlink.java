@@ -2,6 +2,7 @@ package svitoos.OCStuff.driver;
 
 import li.cil.oc.api.driver.item.HostAware;
 import li.cil.oc.api.driver.item.Slot;
+import li.cil.oc.api.internal.Drone;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.prefab.DriverItem;
@@ -27,7 +28,7 @@ public class DriverUpgradeEnderlink extends DriverItem implements HostAware {
   @Override
   public boolean worksWith(ItemStack stack, Class<? extends EnvironmentHost> host) {
     return worksWith(stack)
-        && (isRobot(host) || li.cil.oc.api.internal.Drone.class.isAssignableFrom(host));
+        && (isRobot(host) || Drone.class.isAssignableFrom(host));
   }
 
   @Override

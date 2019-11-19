@@ -15,20 +15,20 @@ import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Node;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.ManagedEnvironment;
+import li.cil.oc.api.prefab.AbstractManagedEnvironment;
 import li.cil.oc.util.ExtendedArguments.ExtendedArguments;
 import li.cil.oc.util.InventoryUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import scala.Option;
 import svitoos.OCStuff.Config;
 
-public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
+public class UpgradeEnderlink extends AbstractManagedEnvironment implements DeviceInfo {
 
   private static final Map<String, String> deviceInfo;
 
@@ -71,7 +71,9 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return deviceInfo;
   }
 
-  @Callback(doc = "remote([name:string[, owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
+  @Callback(
+      doc =
+          "remote([name:string[, owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
   public Object[] remote(Context context, Arguments arguments) {
     if (arguments.count() > 0) {
       final String name = arguments.checkAny(0) == null ? null : arguments.checkString(0);
@@ -102,15 +104,15 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     Agent agent = (Agent) host;
     IInventory inventory = agent.mainInventory();
     final ItemStack stack = inventory.getStackInSlot(agent.selectedSlot());
-    if (remote != this && stack != null && stack.stackSize > 0 && count > 0) {
-      final int stackSize = stack.stackSize;
+    if (remote != this && stack.getCount() > 0 && count > 0) {
+      final int stackSize = stack.getCount();
       if (remote.insertItem(stack, Math.min(stackSize, count))) {
-        if (stack.stackSize == 0) {
-          inventory.setInventorySlotContents(agent.selectedSlot(), null);
+        if (stack.getCount() == 0) {
+          inventory.setInventorySlotContents(agent.selectedSlot(), ItemStack.EMPTY);
         } else {
           inventory.markDirty();
         }
-        return new Object[] {stackSize - stack.stackSize};
+        return new Object[] {stackSize - stack.getCount()};
       }
     }
     return new Object[] {0};
@@ -120,8 +122,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
       doc =
           "transferFluid([amount:number=1000]):number[,string] -- Transfers some fluids from selected tank into the remote enderlink.")
   public Object[] transferFluid(Context context, Arguments arguments) {
-    final int amount =
-        new ExtendedArguments(arguments).optFluidCount(0, FluidContainerRegistry.BUCKET_VOLUME);
+    final int amount = new ExtendedArguments(arguments).optFluidCount(0, Fluid.BUCKET_VOLUME);
     UpgradeEnderlink remote = getRemote();
     if (remote == null) {
       return new Object[] {0, "unavailable"};
@@ -152,7 +153,9 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return new Object[] {isOpen()};
   }
 
-  @Callback(doc = "getOwner():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
+  @Callback(
+      doc =
+          "getOwner():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
   public Object[] getOwner(Context context, Arguments arguments) {
     return new Object[] {getOwnerName()};
   }
@@ -181,14 +184,14 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
 
   @Override
   public void onConnect(Node node) {
-    if (node == this.node() && isOpen()) {
+    if (node == node() && isOpen()) {
       reg();
     }
   }
 
   @Override
   public void onDisconnect(Node node) {
-    if (node == this.node() && isOpen()) {
+    if (node == node() && isOpen()) {
       unreg();
     }
   }
@@ -244,7 +247,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     Agent agent = (Agent) host;
     IInventory inventory = agent.mainInventory();
     return InventoryUtils.insertIntoInventorySlot(
-        stack, inventory, Option.apply(ForgeDirection.UP), agent.selectedSlot(), count, false);
+        stack, inventory, Option.apply(EnumFacing.UP), agent.selectedSlot(), count, false);
   }
 
   private int insertFluid(IFluidTank source, int amount) {

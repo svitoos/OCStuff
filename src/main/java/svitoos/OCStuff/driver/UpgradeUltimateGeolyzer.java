@@ -1,7 +1,5 @@
 package svitoos.OCStuff.driver;
 
-import java.util.HashMap;
-import java.util.Map;
 import li.cil.oc.Settings;
 import li.cil.oc.api.event.GeolyzerEvent.Analyze;
 import li.cil.oc.api.machine.Arguments;
@@ -13,12 +11,18 @@ import li.cil.oc.server.component.UpgradeDatabase;
 import li.cil.oc.util.DatabaseAccess;
 import li.cil.oc.util.ExtendedArguments.ExtendedArguments;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import scala.Function1;
 import scala.runtime.AbstractFunction1;
 import svitoos.OCStuff.Config;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UpgradeUltimateGeolyzer extends Geolyzer {
   private final Map<String, String> deviceInfo;
@@ -46,7 +50,7 @@ public class UpgradeUltimateGeolyzer extends Geolyzer {
         return new Object[] {null, d.err};
       }
       final Map options = arguments.optTable(3, new HashMap());
-      final Analyze event = new Analyze(host(), options, d.x, d.y, d.z);
+      final Analyze event = new Analyze(host(), options, new BlockPos(d.pos));
       MinecraftForge.EVENT_BUS.post(event);
       if (event.isCanceled()) {
         return new Object[] {null, "scan was canceled"};
@@ -66,20 +70,19 @@ public class UpgradeUltimateGeolyzer extends Geolyzer {
     if (d.err != null) {
       return new Object[] {null, d.err};
     }
-    final Block block = host().world().getBlock(d.x, d.y, d.z);
+    final IBlockState blockState = host().world().getBlockState(d.pos);
+    final Block block = blockState.getBlock();
     final Item item = Item.getItemFromBlock(block);
-    if (item == null) {
+    if (item == Items.AIR) {
       return new Object[] {null, "block has no registered item representation"};
     }
-    final int metadata = host().world().getBlockMetadata(d.x, d.y, d.z);
-    final int damage = block.damageDropped(metadata);
-    final ItemStack stack = new ItemStack(item, 1, damage);
+    final ItemStack stack = new ItemStack(item, 1, block.damageDropped(blockState));
     final Function1<UpgradeDatabase, Object[]> f =
         new AbstractFunction1<UpgradeDatabase, Object[]>() {
           @Override
           public Object[] apply(UpgradeDatabase database) {
             final int toSlot = new ExtendedArguments(arguments).checkSlot(database.data(), 4);
-            final boolean nonEmpty = database.getStackInSlot(toSlot) != null;
+            final boolean nonEmpty = database.getStackInSlot(toSlot) != ItemStack.EMPTY;
             database.setStackInSlot(toSlot, stack);
             return new Object[] {nonEmpty};
           }
@@ -88,9 +91,7 @@ public class UpgradeUltimateGeolyzer extends Geolyzer {
   }
 
   private class data {
-    int x;
-    int y;
-    int z;
+    BlockPos pos;
     String err;
 
     data(Arguments arguments) {
@@ -107,9 +108,11 @@ public class UpgradeUltimateGeolyzer extends Geolyzer {
         err = "not enough energy";
         return;
       }
-      x = (int) Math.floor(host().xPosition()) + dx;
-      y = (int) Math.floor(host().yPosition()) + dy;
-      z = (int) Math.floor(host().zPosition()) + dz;
+      pos =
+          new BlockPos(
+              (int) Math.floor(host().xPosition()) + dx,
+              (int) Math.floor(host().yPosition()) + dy,
+              (int) Math.floor(host().zPosition()) + dz);
     }
   }
 }

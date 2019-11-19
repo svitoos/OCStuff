@@ -1,7 +1,13 @@
 package svitoos.OCStuff.init;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistry;
 import svitoos.OCStuff.Config;
 import svitoos.OCStuff.Mods;
 import svitoos.OCStuff.item.UpgradeUltimateGeolyzer;
@@ -9,6 +15,7 @@ import svitoos.OCStuff.item.UpgradeUltimateNavigation;
 import svitoos.OCStuff.item.UpgradeEnderlink;
 import svitoos.OCStuff.item.UpgradeItemCharger;
 import svitoos.OCStuff.item.UpgradeCropnalyzer;
+import svitoos.OCStuff.util.RecipeUtils;
 
 public final class Items {
 
@@ -22,86 +29,88 @@ public final class Items {
 
   public static void init() {
     ultimateNavigationUpgrade = new UpgradeUltimateNavigation();
-    GameRegistry.registerItem(ultimateNavigationUpgrade, "ultimateNavigationUpgrade");
+    ultimateGeolyzerUpgrade = new UpgradeUltimateGeolyzer();
+    enderlinkUpgrade = new UpgradeEnderlink();
+    itemChargerUpgrade = new UpgradeItemCharger();
+  }
+
+  public static void register(IForgeRegistry<Item> registry) {
+    registry.register(ultimateNavigationUpgrade);
     if (Config.ultimateNavigationUpgradeRecipe) {
-      GameRegistry.addRecipe(
+      RecipeUtils.addShapedRecipe(
           new ItemStack(ultimateNavigationUpgrade),
           "xgx",
           "cic",
           "xpx",
           'g',
-          net.minecraft.init.Items.map,
+          net.minecraft.init.Items.MAP,
           'x',
-          net.minecraft.init.Items.gold_ingot,
+          "ingotGold",
           'c',
-          li.cil.oc.api.Items.get("chip2").createItemStack(1),
+          "oc:circuitChip2",
           'i',
-          net.minecraft.init.Items.ender_eye,
+          net.minecraft.init.Items.ENDER_EYE,
           'p',
-          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+          "oc:materialCircuitBoardPrinted");
     }
 
-    ultimateGeolyzerUpgrade = new UpgradeUltimateGeolyzer();
-    GameRegistry.registerItem(ultimateGeolyzerUpgrade, "ultimateGeolyzerUpgrade");
+    registry.register(ultimateGeolyzerUpgrade);
     if (Config.ultimateGeolyzerUpgradeRecipe) {
-      GameRegistry.addRecipe(
+      RecipeUtils.addShapedRecipe(
           new ItemStack(ultimateGeolyzerUpgrade),
           "xgx",
           "cic",
           "xpx",
           'g',
-          li.cil.oc.api.Items.get("geolyzer").createItemStack(1),
+          "oc:geolyzer",
           'x',
-          net.minecraft.init.Items.gold_ingot,
+          "ingotGold",
           'c',
-          li.cil.oc.api.Items.get("chip3").createItemStack(1),
+          "oc:circuitChip3",
           'i',
-          li.cil.oc.api.Items.get("interweb").createItemStack(1),
+          "oc:materialInterweb",
           'p',
-          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+          "oc:materialCircuitBoardPrinted");
     }
 
-    enderlinkUpgrade = new UpgradeEnderlink();
-    GameRegistry.registerItem(enderlinkUpgrade, "enderlinkUpgrade");
+    registry.register(enderlinkUpgrade);
     if (Config.enderlinkUpgradeRecipe) {
-      GameRegistry.addRecipe(
+      RecipeUtils.addShapedRecipe(
           new ItemStack(enderlinkUpgrade),
           "xgx",
           "cic",
           "xpx",
           'g',
-          li.cil.oc.api.Items.get("inventoryControllerUpgrade").createItemStack(1),
+          "oc:inventoryControllerUpgrade",
           'x',
-          net.minecraft.init.Items.ender_eye,
+          net.minecraft.init.Items.ENDER_EYE,
           'c',
-          li.cil.oc.api.Items.get("chip3").createItemStack(1),
+          "oc:circuitChip3",
           'i',
-          li.cil.oc.api.Items.get("interweb").createItemStack(1),
+          "oc:materialInterweb",
           'p',
-          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+          "oc:materialCircuitBoardPrinted");
     }
 
-    itemChargerUpgrade = new UpgradeItemCharger();
-    GameRegistry.registerItem(itemChargerUpgrade, "itemChargerUpgrade");
+    registry.register(itemChargerUpgrade);
     if (Config.itemChargerUpgradeRecipe) {
-      GameRegistry.addRecipe(
+      RecipeUtils.addShapedRecipe(
           new ItemStack(itemChargerUpgrade),
           "x x",
           "cic",
           "xpx",
           'x',
-          net.minecraft.init.Items.diamond,
+          "gemDiamond",
           'c',
-          li.cil.oc.api.Items.get("chip3").createItemStack(1),
+          "oc:circuitChip3",
           'i',
-          li.cil.oc.api.Items.get("charger").createItemStack(1),
+          "oc:charger",
           'p',
-          li.cil.oc.api.Items.get("printedCircuitBoard").createItemStack(1));
+          "oc:materialCircuitBoardPrinted");
     }
 
     if (Mods.IndustrialCraft2()) {
-      svitoos.OCStuff.init.ic2.Items.init();
+      svitoos.OCStuff.init.ic2.Items.register(registry);
     }
-
   }
 }

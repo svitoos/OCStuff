@@ -6,8 +6,8 @@ import svitoos.OCStuff.OCStuff;
 
 public class UpgradeEnderlink extends Item {
   public UpgradeEnderlink() {
+    setRegistryName(OCStuff.MOD_ID, "upgrade_enderlink");
     setCreativeTab(CreativeTab.instance);
-    setUnlocalizedName("UpgradeEnderlink");
-    setTextureName(OCStuff.MOD_ID + ":" + "UpgradeEnderlink");
+    setTranslationKey("upgrade_enderlink");
   }
 }

@@ -13,12 +13,12 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.ManagedEnvironment;
+import li.cil.oc.api.prefab.AbstractManagedEnvironment;
 import li.cil.oc.integration.util.ItemCharge;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo {
+public class UpgradeItemCharger extends AbstractManagedEnvironment implements DeviceInfo {
 
   private static final Map<String, String> deviceInfo;
 
@@ -58,7 +58,7 @@ public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo
     if (charge && host.world().getTotalWorldTime() % Settings.get().tickFrequency() == 0) {
       Agent agent = (Agent) host;
       ItemStack stack = agent.mainInventory().getStackInSlot(agent.selectedSlot());
-      if (stack != null && stack.stackSize > 0 && ItemCharge.canCharge(stack)) {
+      if (stack.getCount() > 0 && ItemCharge.canCharge(stack)) {
         final double charge = Settings.get().chargeRateTablet() * Settings.get().tickFrequency();
         Connector connector = (Connector) node();
         if (Settings.get().ignorePower()

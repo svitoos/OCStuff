@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "ocstuff:items/upgrade_ultimate_navigation"
+  }
+}

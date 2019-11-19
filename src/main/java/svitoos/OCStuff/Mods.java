@@ -1,9 +1,9 @@
 package svitoos.OCStuff;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 
 public final class Mods {
   public static boolean IndustrialCraft2() {
-    return Config.integrationIndustrialCraft2 && Loader.isModLoaded("IC2");
+    return Config.integrationIndustrialCraft2 && Loader.isModLoaded("ic2");
   }
 }

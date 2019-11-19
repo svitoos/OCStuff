@@ -8,8 +8,8 @@ import svitoos.OCStuff.OCStuff;
 public class UpgradeUltimateNavigation extends Item {
 
   public UpgradeUltimateNavigation() {
+    setRegistryName(OCStuff.MOD_ID, "upgrade_ultimate_navigation");
     setCreativeTab(CreativeTab.instance);
-    setUnlocalizedName("UpgradeUltimateNavigation");
-    setTextureName(OCStuff.MOD_ID + ":" + "UpgradeUltimateNavigation");
+    setTranslationKey("upgrade_ultimate_navigation");
   }
 }

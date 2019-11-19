@@ -17,26 +17,27 @@ public class ConvertCropSeedItem implements Converter {
       final ItemStack stack = (ItemStack) value;
       final Item item = stack.getItem();
       if (item instanceof ItemCropSeed && stack.getTagCompound() != null) {
+        final ItemCropSeed itemCropSeed = (ItemCropSeed) item;
         final Map<String, Object> crop = new HashMap<>();
         final CropCard cropCard = Crops.instance.getCropCard(stack);
-        final int scanLevel = ItemCropSeed.getScannedFromStack(stack);
+        final int scanLevel = itemCropSeed.getScannedFromStack(stack);
         crop.put("scanLevel", scanLevel);
         if (scanLevel == 0) {
           crop.put("name", "unknown");
         } else if (scanLevel > 0 && cropCard != null) {
-          crop.put("name", cropCard.owner() + ":" + cropCard.name());
+          crop.put("name", cropCard.getOwner() + ":" + cropCard.getId());
           if (scanLevel >= 2) {
-            crop.put("tier", cropCard.tier());
-            crop.put("discoveredBy", cropCard.discoveredBy());
+            crop.put("tier", 0);
+            crop.put("discoveredBy", cropCard.getDiscoveredBy());
           }
           if (scanLevel >= 3) {
-            crop.put("attributes", cropCard.attributes());
+            crop.put("attributes", cropCard.getAttributes());
           }
           if (scanLevel >= 4) {
             final Map<String, Object> stat = new HashMap<>();
-            stat.put("growth", ItemCropSeed.getGrowthFromStack(stack));
-            stat.put("gain", ItemCropSeed.getGainFromStack(stack));
-            stat.put("resistance", ItemCropSeed.getResistanceFromStack(stack));
+            stat.put("growth", itemCropSeed.getGrowthFromStack(stack));
+            stat.put("gain", itemCropSeed.getGainFromStack(stack));
+            stat.put("resistance", itemCropSeed.getResistanceFromStack(stack));
             crop.put("stat", stat);
           }
         } else {

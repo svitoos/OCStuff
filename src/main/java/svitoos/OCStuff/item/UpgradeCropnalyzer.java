@@ -7,8 +7,8 @@ import svitoos.OCStuff.OCStuff;
 public class UpgradeCropnalyzer extends Item {
 
   public UpgradeCropnalyzer() {
+    setRegistryName(OCStuff.MOD_ID, "upgrade_cropnalyzer");
     setCreativeTab(CreativeTab.instance);
-    setUnlocalizedName("UpgradeCropnalyzer");
-    setTextureName(OCStuff.MOD_ID + ":" + "UpgradeCropnalyzer");
+    setTranslationKey("upgrade_cropnalyzer");
   }
 }

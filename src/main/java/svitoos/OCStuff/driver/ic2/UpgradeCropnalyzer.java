@@ -13,12 +13,13 @@ import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.ManagedEnvironment;
+import li.cil.oc.api.prefab.AbstractManagedEnvironment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
 import svitoos.OCStuff.Config;
 
-public class UpgradeCropnalyzer extends ManagedEnvironment implements DeviceInfo {
+public class UpgradeCropnalyzer extends AbstractManagedEnvironment implements DeviceInfo {
 
   private static final Map<String, String> deviceInfo;
 
@@ -52,32 +53,36 @@ public class UpgradeCropnalyzer extends ManagedEnvironment implements DeviceInfo
   public Object[] analyze(Context context, Arguments arguments) {
     Agent agent = (Agent) host;
     ItemStack stack = agent.mainInventory().getStackInSlot(agent.selectedSlot());
-    if (stack != null && stack.getItem() instanceof ItemCropSeed) {
-      final int scanLevel = Math.max(ItemCropSeed.getScannedFromStack(stack), 0);
+    if (stack.getCount() > 0 && stack.getItem() instanceof ItemCropSeed) {
+      final ItemCropSeed itemCropSeed = (ItemCropSeed) stack.getItem();
+      final int scanLevel = Math.max(itemCropSeed.getScannedFromStack(stack), 0);
       if (scanLevel < 4) {
         if (!((Connector) node()).tryChangeBuffer(-Config.cropnalyzerScanCost[scanLevel])) {
           return new Object[] {false, "not enough energy"};
         }
-        ItemCropSeed.incrementScannedOfStack(stack);
+        itemCropSeed.incrementScannedFromStack(stack);
       }
       return new Object[] {true};
     }
     return new Object[] {false, "not seeds"};
   }
 
-  @Callback(doc="Returns the humidity bonus for a biome.")
+  @Callback(doc = "Returns the humidity bonus for a biome.")
   public Object[] getHumidityBiomeBonus(Context context, Arguments arguments) {
     return new Object[] {Crops.instance.getHumidityBiomeBonus(getBiome())};
   }
 
-  @Callback(doc="Returns the nutrient bonus for a biome.")
+  @Callback(doc = "Returns the nutrient bonus for a biome.")
   public Object[] getNutrientBiomeBonus(Context context, Arguments arguments) {
     return new Object[] {Crops.instance.getNutrientBiomeBonus(getBiome())};
   }
 
-  private BiomeGenBase getBiome() {
+  private Biome getBiome() {
     return host.world()
-        .getBiomeGenForCoords(
-            (int) Math.floor(host.xPosition()), (int) Math.floor(host.zPosition()));
+        .getBiome(
+            new BlockPos(
+                (int) Math.floor(host.xPosition()),
+                (int) Math.floor(host.yPosition()),
+                (int) Math.floor(host.zPosition())));
   }
 }

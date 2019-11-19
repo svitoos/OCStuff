@@ -7,11 +7,11 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
     }
 }
 
-apply plugin: 'forge'
+apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: 'java'
 apply plugin: 'idea'
 
@@ -66,11 +66,12 @@ version = "mc${config.minecraft.version}-${project.simpleVersion}"
 group = config.mod.group
 archivesBaseName = config.mod.archivesBaseName
 
-
 minecraft {
     version = config.minecraft.version + "-" + config.forge.version
     runDir = "run"
     
+    mappings = config.minecraft.mappings
+
     replace "@MODNAME@", config.mod.name
     replace "@MODID@", config.mod.id
     replace "@MODVERSION@", project.simpleVersion
@@ -98,7 +99,7 @@ sourceSets {
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:${config.oc.version}:dev"
+    compile "li.cil.oc:OpenComputers:${config.oc.version}"
     provided "net.industrial-craft:industrialcraft-2:${config.ic2.version}:dev"
 }
 
