@@ -52,21 +52,20 @@ def getVersionFromGitTag() {
   }
 }
 
-def getVersion() {
+def getVersionTag() {
   def vGit = getVersionFromGitTag()
-  def vConf = "${config.mod.version}"
-  if (vGit == ("v" + vConf)) {
-    return vConf
+  def vConf = "mc${config.minecraft.version}-${config.mod.version}"
+  if (vGit == vConf) {
+    return ""
   }
-  return vConf + "+" + getGitRef()
+  return "+" + getGitRef()
 }
 
-version = getVersion()
+ext.simpleVersion =  "${config.mod.version}${getVersionTag()}"
+version = "mc${config.minecraft.version}-${project.simpleVersion}"
 group = config.mod.group
 archivesBaseName = config.mod.archivesBaseName
 
-ext.simpleVersion = version
-version = "mc${config.minecraft.version}-${project.version}"
 
 minecraft {
     version = config.minecraft.version + "-" + config.forge.version
