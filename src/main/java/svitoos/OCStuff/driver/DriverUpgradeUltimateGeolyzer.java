@@ -26,7 +26,7 @@ public class DriverUpgradeUltimateGeolyzer extends DriverItem implements HostAwa
 
   @Override
   public boolean worksWith(ItemStack stack, Class<? extends EnvironmentHost> host) {
-    return worksWith(stack) && (isRotatable(host));
+    return worksWith(stack) && isRotatable(host);
   }
 
   @Override

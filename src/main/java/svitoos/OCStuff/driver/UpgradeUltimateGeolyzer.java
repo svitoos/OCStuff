@@ -1,7 +1,5 @@
 package svitoos.OCStuff.driver;
 
-import java.util.HashMap;
-import java.util.Map;
 import li.cil.oc.Settings;
 import li.cil.oc.api.event.GeolyzerEvent.Analyze;
 import li.cil.oc.api.machine.Arguments;
@@ -19,6 +17,9 @@ import net.minecraftforge.common.MinecraftForge;
 import scala.Function1;
 import scala.runtime.AbstractFunction1;
 import svitoos.OCStuff.Config;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UpgradeUltimateGeolyzer extends Geolyzer {
   private final Map<String, String> deviceInfo;

@@ -6,6 +6,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import svitoos.OCStuff.init.Drivers;
 import svitoos.OCStuff.init.Events;
 import svitoos.OCStuff.init.Items;
+import svitoos.OCStuff.init.Recipes;
 
 public class CommonProxy {
 
@@ -13,6 +14,8 @@ public class CommonProxy {
 
   public void init(FMLInitializationEvent e) {
     Items.init();
+    Items.registerItems();
+    Recipes.add();
     Events.init();
     Drivers.init();
   }

@@ -65,12 +65,12 @@ public class UpgradeCropnalyzer extends ManagedEnvironment implements DeviceInfo
     return new Object[] {false, "not seeds"};
   }
 
-  @Callback(doc="Returns the humidity bonus for a biome.")
+  @Callback(doc = "Returns the humidity bonus for a biome.")
   public Object[] getHumidityBiomeBonus(Context context, Arguments arguments) {
     return new Object[] {Crops.instance.getHumidityBiomeBonus(getBiome())};
   }
 
-  @Callback(doc="Returns the nutrient bonus for a biome.")
+  @Callback(doc = "Returns the nutrient bonus for a biome.")
   public Object[] getNutrientBiomeBonus(Context context, Arguments arguments) {
     return new Object[] {Crops.instance.getNutrientBiomeBonus(getBiome())};
   }

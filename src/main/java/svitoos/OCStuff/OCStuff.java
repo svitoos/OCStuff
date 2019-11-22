@@ -65,11 +65,11 @@ public class OCStuff {
     UpgradeEnderlink.cleanup();
   }
 
-  static void info(String format, Object... data) {
+  public static void info(String format, Object... data) {
     logger.log(Level.INFO, format, data);
   }
 
-  static void warn(String format, Object... data) {
+  public static void warn(String format, Object... data) {
     logger.log(Level.WARN, format, data);
   }
 }

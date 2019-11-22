@@ -71,7 +71,9 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return deviceInfo;
   }
 
-  @Callback(doc = "remote([name:string[, owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
+  @Callback(
+      doc =
+          "remote([name:string[, owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
   public Object[] remote(Context context, Arguments arguments) {
     if (arguments.count() > 0) {
       final String name = arguments.checkAny(0) == null ? null : arguments.checkString(0);
@@ -152,7 +154,9 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return new Object[] {isOpen()};
   }
 
-  @Callback(doc = "getOwner():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
+  @Callback(
+      doc =
+          "getOwner():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
   public Object[] getOwner(Context context, Arguments arguments) {
     return new Object[] {getOwnerName()};
   }
@@ -181,14 +185,14 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
 
   @Override
   public void onConnect(Node node) {
-    if (node == this.node() && isOpen()) {
+    if (node == node() && isOpen()) {
       reg();
     }
   }
 
   @Override
   public void onDisconnect(Node node) {
-    if (node == this.node() && isOpen()) {
+    if (node == node() && isOpen()) {
       unreg();
     }
   }
