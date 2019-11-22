@@ -1,13 +1,13 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             name = "forge"
             url = "https://files.minecraftforge.net/maven"
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
@@ -52,26 +52,24 @@ def getVersionFromGitTag() {
   }
 }
 
-def getVersion() {
+def getVersionTag() {
   def vGit = getVersionFromGitTag()
-  def vConf = "${config.mod.version}"
-  if (vGit == ("v" + vConf)) {
-    return vConf
+  def vConf = "mc${config.minecraft.version}-${config.mod.version}"
+  if (vGit == vConf) {
+    return ""
   }
-  return vConf + "+" + getGitRef()
+  return "+" + getGitRef()
 }
 
-version = getVersion()
+ext.simpleVersion =  "${config.mod.version}${getVersionTag()}"
+version = "mc${config.minecraft.version}-${project.simpleVersion}"
 group = config.mod.group
 archivesBaseName = config.mod.archivesBaseName
-
-ext.simpleVersion = version
-version = "mc${config.minecraft.version}-${project.version}"
 
 minecraft {
     version = config.minecraft.version + "-" + config.forge.version
     runDir = "run"
-    
+
     replace "@MODNAME@", config.mod.name
     replace "@MODID@", config.mod.id
     replace "@MODVERSION@", project.simpleVersion
@@ -80,6 +78,9 @@ minecraft {
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
     maven { url = "http://maven.cil.li/" }
     maven {
         name = "ic2"
