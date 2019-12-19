@@ -1,34 +1,29 @@
 package svitoos.OCStuff;
 
 import java.io.File;
-
 import net.minecraftforge.common.config.Configuration;
 
 public class Config {
-  private static Configuration configuration;
-
+  public static boolean ultimateNavigationUpgradeEnabled;
   public static boolean ultimateNavigationUpgradeRecipe;
   public static int ultimateNavigationUpgradeTier;
-
+  public static boolean ultimateGeolyzerUpgradeEnabled;
   public static boolean ultimateGeolyzerUpgradeRecipe;
   public static int ultimateGeolyzerUpgradeTier;
-
   public static double geolyzerCostPerRange;
-
+  public static boolean enderlinkUpgradeEnabled;
   public static boolean enderlinkUpgradeRecipe;
   public static int enderlinkUpgradeTier;
-
   public static double enderlinkTransferCost;
-
+  public static boolean itemChargerUpgradeEnabled;
   public static boolean itemChargerUpgradeRecipe;
   public static int itemChargerUpgradeTier;
-
   public static boolean integrationIndustrialCraft2;
-
+  public static boolean cropnalyzerUpgradeEnabled;
   public static boolean cropnalyzerUpgradeRecipe;
   public static int cropnalyzerUpgradeTier;
-
   public static double[] cropnalyzerScanCost;
+  private static Configuration configuration;
 
   static void init(File file) {
     configuration = new Configuration(file, true);
@@ -36,11 +31,13 @@ public class Config {
 
     // Ultimate Navigation Upgrade
 
+    ultimateNavigationUpgradeEnabled = getEnable("UpgradeUltimateNavigation");
     ultimateNavigationUpgradeRecipe = getRecipe("UpgradeUltimateNavigation");
     ultimateNavigationUpgradeTier = getTier("UpgradeUltimateNavigation", 0);
 
     // Ultimate Geolyzer Upgrade
 
+    ultimateGeolyzerUpgradeEnabled = getEnable("UpgradeUltimateGeolyzer");
     ultimateGeolyzerUpgradeRecipe = getRecipe("UpgradeUltimateGeolyzer");
     ultimateGeolyzerUpgradeTier = getTier("UpgradeUltimateGeolyzer", 0);
 
@@ -55,6 +52,7 @@ public class Config {
 
     // Enderlink Upgrade
 
+    enderlinkUpgradeEnabled = getEnable("UpgradeEnderlink");
     enderlinkUpgradeRecipe = getRecipe("UpgradeEnderlink");
     enderlinkUpgradeTier = getTier("UpgradeEnderlnk", 2);
 
@@ -69,6 +67,7 @@ public class Config {
 
     // Item Charger Upgrade
 
+    itemChargerUpgradeEnabled = getEnable("UpgradeItemCharger");
     itemChargerUpgradeRecipe = getRecipe("UpgradeItemCharger");
     itemChargerUpgradeTier = getTier("UpgradeItemCharger", 1);
 
@@ -79,6 +78,7 @@ public class Config {
 
     // Cropnalyzer Upgrade
 
+    cropnalyzerUpgradeEnabled = getEnable("UpgradeCropnalyzer");
     cropnalyzerUpgradeRecipe = getRecipe("UpgradeCropnalyzer");
     cropnalyzerUpgradeTier = getTier("UpgradeCropnalyzer", 1);
 
@@ -100,5 +100,9 @@ public class Config {
 
   private static boolean getRecipe(String name) {
     return configuration.getBoolean(name, "recipe", true, "");
+  }
+
+  private static boolean getEnable(String name) {
+    return configuration.getBoolean(name, "enable", true, "");
   }
 }

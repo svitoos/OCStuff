@@ -1,9 +1,8 @@
 package svitoos.OCStuff.init;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.ItemStack;
-import svitoos.OCStuff.Config;
-import svitoos.OCStuff.Mods;
+import java.util.ArrayList;
+import java.util.List;
 import svitoos.OCStuff.item.Item;
 import svitoos.OCStuff.item.UpgradeUltimateGeolyzer;
 import svitoos.OCStuff.item.UpgradeUltimateNavigation;
@@ -19,6 +18,8 @@ public final class Items {
   public static UpgradeItemCharger itemChargerUpgrade;
   public static UpgradeCropnalyzer cropnalyzerUpgrade;
 
+  public static List<Item> regItems = new ArrayList<>();
+
   private Items() {}
 
   public static void init() {
@@ -26,10 +27,7 @@ public final class Items {
     ultimateGeolyzerUpgrade = new UpgradeUltimateGeolyzer();
     enderlinkUpgrade = new UpgradeEnderlink();
     itemChargerUpgrade = new UpgradeItemCharger();
-
-    if (Mods.IndustrialCraft2()) {
-      cropnalyzerUpgrade = new UpgradeCropnalyzer();
-    }
+    cropnalyzerUpgrade = new UpgradeCropnalyzer();
   }
 
   public static void registerItems() {
@@ -43,6 +41,7 @@ public final class Items {
   private static void registerItem(Item item) {
     if (item != null) {
       GameRegistry.registerItem(item, item.getItemId());
+      regItems.add(item);
     }
   }
 }

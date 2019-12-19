@@ -2,10 +2,7 @@ package svitoos.OCStuff.driver;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import java.util.HashMap;
-import java.util.Map;
 import li.cil.oc.api.Network;
-import li.cil.oc.api.driver.DeviceInfo;
 import li.cil.oc.api.internal.Agent;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -15,7 +12,6 @@ import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Node;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.ManagedEnvironment;
 import li.cil.oc.util.ExtendedArguments.ExtendedArguments;
 import li.cil.oc.util.InventoryUtils;
 import net.minecraft.inventory.IInventory;
@@ -27,29 +23,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import scala.Option;
 import svitoos.OCStuff.Config;
+import svitoos.OCStuff.util.OCUtils;
+import svitoos.OCStuff.util.OCUtils.Device;
 
-public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
-
-  private static final Map<String, String> deviceInfo;
-
-  static {
-    deviceInfo = new HashMap<>();
-    deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
-    deviceInfo.put(DeviceAttribute.Description, "Enderlink");
-    deviceInfo.put(DeviceAttribute.Vendor, "Scrag Technologies");
-    deviceInfo.put(DeviceAttribute.Product, "Enderlink v1");
-  }
+public class UpgradeEnderlink extends ManagedEnvironmentWithDeviceInfo {
 
   private static Multimap<String, UpgradeEnderlink> enderlinks;
-
-  public static void init() {
-    enderlinks = HashMultimap.create();
-  }
-
-  public static void cleanup() {
-    enderlinks.clear();
-    enderlinks = null;
-  }
 
   private final EnvironmentHost host;
   private String name;
@@ -66,14 +45,24 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
             .create());
   }
 
+  public static void init() {
+    enderlinks = HashMultimap.create();
+  }
+
+  public static void cleanup() {
+    enderlinks.clear();
+    enderlinks = null;
+  }
+
   @Override
-  public Map<String, String> getDeviceInfo() {
-    return deviceInfo;
+  protected Device deviceInfo() {
+    return new OCUtils.Device(
+        DeviceClass.Generic, "Enderlink", OCUtils.Vendors.Scrag, "Enderlink v1");
   }
 
   @Callback(
       doc =
-          "remote([name:string[, owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
+          "function([name:string[,owner:string]]):string,string -- Returns the currently remote enderlink; sets the remote enderlink if specified.")
   public Object[] remote(Context context, Arguments arguments) {
     if (arguments.count() > 0) {
       final String name = arguments.checkAny(0) == null ? null : arguments.checkString(0);
@@ -84,14 +73,14 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return new Object[] {remoteName, remoteOwner};
   }
 
-  @Callback(doc = "remoteAvailable():boolean -- Returns whether the remote enderlink is available")
+  @Callback(doc = "function():boolean -- Returns whether the remote enderlink is available")
   public Object[] remoteAvailable(Context context, Arguments arguments) {
     return new Object[] {getRemote() != null};
   }
 
   @Callback(
       doc =
-          "transferItem([count:number=64]):number[,string] -- Transfers some items from selected slot into the remote enderlink.")
+          "function([count:number=64]):number[,string] -- Transfers some items from selected slot into the remote enderlink.")
   public Object[] transferItem(Context context, Arguments arguments) {
     final int count = new ExtendedArguments(arguments).optItemCount(0, 64);
     UpgradeEnderlink remote = getRemote();
@@ -120,7 +109,7 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
 
   @Callback(
       doc =
-          "transferFluid([amount:number=1000]):number[,string] -- Transfers some fluids from selected tank into the remote enderlink.")
+          "function([amount:number=1000]):number[,string] -- Transfers some fluids from selected tank into the remote enderlink.")
   public Object[] transferFluid(Context context, Arguments arguments) {
     final int amount =
         new ExtendedArguments(arguments).optFluidCount(0, FluidContainerRegistry.BUCKET_VOLUME);
@@ -139,34 +128,35 @@ public class UpgradeEnderlink extends ManagedEnvironment implements DeviceInfo {
     return new Object[] {0};
   }
 
-  @Callback(doc = "getName():string -- Returns the input channel name.")
+  @Callback(doc = "function():string -- Returns the input channel name.")
   public Object[] getName(Context context, Arguments arguments) {
     return new Object[] {name};
   }
 
-  @Callback(doc = "isPublic(): -- Returns whether the input channel is public")
+  @Callback(doc = "function(): -- Returns whether the input channel is public")
   public Object[] isPublic(Context context, Arguments arguments) {
     return new Object[] {isPublic};
   }
 
-  @Callback(doc = "isOpen():boolean -- Returns whether the input channel is open")
+  @Callback(doc = "function():boolean -- Returns whether the input channel is open")
   public Object[] isOpen(Context context, Arguments arguments) {
     return new Object[] {isOpen()};
   }
 
   @Callback(
       doc =
-          "getOwner():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
+          "function():string -- Returns the input channel owner (The owner is the player who installed the robot/drone).")
   public Object[] getOwner(Context context, Arguments arguments) {
     return new Object[] {getOwnerName()};
   }
 
-  @Callback(doc = "open(name:string[, isPublic:boolean=false]):boolean -- Opens the input channel.")
+  @Callback(
+      doc = "function(name:string[,isPublic:boolean=false]):boolean -- Opens the input channel.")
   public Object[] open(Context context, Arguments arguments) {
     return new Object[] {open(arguments.checkString(0), arguments.optBoolean(1, false))};
   }
 
-  @Callback(doc = "close():boolean -- Closes the input channel")
+  @Callback(doc = "function():boolean -- Closes the input channel")
   public Object[] close(Context context, Arguments arguments) {
     return new Object[] {close()};
   }

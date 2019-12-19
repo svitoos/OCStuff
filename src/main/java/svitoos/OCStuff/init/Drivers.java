@@ -1,23 +1,27 @@
 package svitoos.OCStuff.init;
 
 import li.cil.oc.api.API;
+import li.cil.oc.api.driver.EnvironmentProvider;
+import li.cil.oc.api.driver.Item;
 import svitoos.OCStuff.Mods;
-import svitoos.OCStuff.driver.DriverUpgradeEnderlink;
-import svitoos.OCStuff.driver.DriverUpgradeItemCharger;
-import svitoos.OCStuff.driver.DriverUpgradeUltimateGeolyzer;
-import svitoos.OCStuff.driver.DriverUpgradeUltimateNavigation;
 import svitoos.OCStuff.driver.ic2.ConvertCropSeedItem;
-import svitoos.OCStuff.driver.ic2.DriverCropnalyzer;
 
 public final class Drivers {
   public static void init() {
-    API.driver.add(new DriverUpgradeUltimateNavigation());
-    API.driver.add(new DriverUpgradeUltimateGeolyzer());
-    API.driver.add(new DriverUpgradeItemCharger());
-    API.driver.add(new DriverUpgradeEnderlink());
+    Items.regItems.stream()
+        .filter(item -> item.isEnabled() && item instanceof Item)
+        .map(item -> (Item) item)
+        .forEach(Drivers::regItemDriver);
+
     if (Mods.IndustrialCraft2()) {
       API.driver.add(new ConvertCropSeedItem());
-      API.driver.add(new DriverCropnalyzer());
+    }
+  }
+
+  private static void regItemDriver(Item d) {
+    API.driver.add(d);
+    if (d instanceof EnvironmentProvider) {
+      API.driver.add((EnvironmentProvider) d);
     }
   }
 }

@@ -1,5 +1,7 @@
 package svitoos.OCStuff.driver;
 
+import java.util.HashMap;
+import java.util.Map;
 import li.cil.oc.Settings;
 import li.cil.oc.api.event.GeolyzerEvent.Analyze;
 import li.cil.oc.api.machine.Arguments;
@@ -17,24 +19,25 @@ import net.minecraftforge.common.MinecraftForge;
 import scala.Function1;
 import scala.runtime.AbstractFunction1;
 import svitoos.OCStuff.Config;
-
-import java.util.HashMap;
-import java.util.Map;
+import svitoos.OCStuff.util.OCUtils;
 
 public class UpgradeUltimateGeolyzer extends Geolyzer {
-  private final Map<String, String> deviceInfo;
+
+  private static Map<String, String> deviceInfo;
 
   public UpgradeUltimateGeolyzer(EnvironmentHost host) {
     super(host);
-    deviceInfo = new HashMap<>();
-    deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
-    deviceInfo.put(DeviceAttribute.Description, "Ultimate Geolyzer Upgrade");
-    deviceInfo.put(DeviceAttribute.Vendor, "Scrag Technologies");
-    deviceInfo.put(DeviceAttribute.Product, "Terrain Analyzer MkIII");
   }
 
   @Override
   public Map<String, String> getDeviceInfo() {
+    if (deviceInfo == null) {
+      deviceInfo = new HashMap<>();
+      deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
+      deviceInfo.put(DeviceAttribute.Description, "Ultimate Geolyzer Upgrade");
+      deviceInfo.put(DeviceAttribute.Vendor, OCUtils.Vendors.Scrag);
+      deviceInfo.put(DeviceAttribute.Product, "Terrain Analyzer MkIII");
+    }
     return deviceInfo;
   }
 

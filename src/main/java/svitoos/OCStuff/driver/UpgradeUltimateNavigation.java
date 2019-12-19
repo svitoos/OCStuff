@@ -12,23 +12,28 @@ import li.cil.oc.api.network.Message;
 import li.cil.oc.server.component.UpgradeNavigation;
 import li.cil.oc.util.BlockPosition;
 import net.minecraft.nbt.NBTTagCompound;
+import svitoos.OCStuff.util.OCUtils;
 
 public class UpgradeUltimateNavigation extends UpgradeNavigation {
+
+  private static Map<String, String> deviceInfo;
+
   private final EnvironmentHost host;
-  private final Map<String, String> deviceInfo;
 
   public UpgradeUltimateNavigation(EnvironmentHost host) {
     super(host);
     this.host = host;
-    deviceInfo = new HashMap<>();
-    deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
-    deviceInfo.put(DeviceAttribute.Description, "Ultimate Navigation Upgrade");
-    deviceInfo.put(DeviceAttribute.Vendor, "Scrag Technologies");
-    deviceInfo.put(DeviceAttribute.Product, "PathFinder v4");
   }
 
   @Override
   public Map<String, String> getDeviceInfo() {
+    if (deviceInfo == null) {
+      deviceInfo = new HashMap<>();
+      deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
+      deviceInfo.put(DeviceAttribute.Description, "Ultimate Navigation Upgrade");
+      deviceInfo.put(DeviceAttribute.Vendor, OCUtils.Vendors.Scrag);
+      deviceInfo.put(DeviceAttribute.Product, "PathFinder v4");
+    }
     return deviceInfo;
   }
 

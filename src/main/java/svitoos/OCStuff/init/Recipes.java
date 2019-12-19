@@ -11,7 +11,7 @@ public final class Recipes {
     final Item ender_eye = net.minecraft.init.Items.ender_eye;
     final Item map = net.minecraft.init.Items.map;
 
-    if (Config.ultimateNavigationUpgradeRecipe) {
+    if (Config.ultimateNavigationUpgradeEnabled && Config.ultimateNavigationUpgradeRecipe) {
       RecipeUtils.addShapedRecipe(
           new ItemStack(Items.ultimateNavigationUpgrade),
           "xgx",
@@ -29,7 +29,7 @@ public final class Recipes {
           "oc:materialCircuitBoardPrinted");
     }
 
-    if (Config.ultimateGeolyzerUpgradeRecipe) {
+    if (Config.ultimateGeolyzerUpgradeEnabled && Config.ultimateGeolyzerUpgradeRecipe) {
       RecipeUtils.addShapedRecipe(
           new ItemStack(Items.ultimateGeolyzerUpgrade),
           "xgx",
@@ -47,7 +47,7 @@ public final class Recipes {
           "oc:materialCircuitBoardPrinted");
     }
 
-    if (Config.enderlinkUpgradeRecipe) {
+    if (Config.enderlinkUpgradeEnabled && Config.enderlinkUpgradeRecipe) {
       RecipeUtils.addShapedRecipe(
           new ItemStack(Items.enderlinkUpgrade),
           "xgx",
@@ -65,7 +65,7 @@ public final class Recipes {
           "oc:materialCircuitBoardPrinted");
     }
 
-    if (Config.itemChargerUpgradeRecipe) {
+    if (Config.itemChargerUpgradeEnabled && Config.itemChargerUpgradeRecipe) {
       RecipeUtils.addShapedRecipe(
           new ItemStack(Items.itemChargerUpgrade),
           "x x",

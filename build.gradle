@@ -85,6 +85,10 @@ repositories {
         name = "ic2"
         url = "http://maven.ic2.player.to/"
     }
+    maven {
+        name = "chickenbones"
+        url = "http://chickenbones.net/maven/"
+    }
 }
 
 configurations {
@@ -101,6 +105,9 @@ sourceSets {
 dependencies {
     compile "li.cil.oc:OpenComputers:${config.oc.version}:dev"
     provided "net.industrial-craft:industrialcraft-2:${config.ic2.version}:dev"
+    provided "codechicken:CodeChickenLib:1.7.10-1.1.3.136:dev"
+    provided "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
+    provided "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
 }
 
 processResources {

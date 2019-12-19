@@ -8,7 +8,7 @@ import svitoos.OCStuff.util.RecipeUtils;
 
 public final class Recipes {
   public static void add() {
-    if (Config.cropnalyzerUpgradeRecipe) {
+    if (Config.cropnalyzerUpgradeEnabled && Config.cropnalyzerUpgradeRecipe) {
       RecipeUtils.addShapedRecipe(
           new ItemStack(svitoos.OCStuff.init.Items.cropnalyzerUpgrade),
           "x x",

@@ -1,10 +1,7 @@
 package svitoos.OCStuff.driver;
 
-import java.util.HashMap;
-import java.util.Map;
 import li.cil.oc.Settings;
 import li.cil.oc.api.Network;
-import li.cil.oc.api.driver.DeviceInfo;
 import li.cil.oc.api.internal.Agent;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -13,22 +10,13 @@ import li.cil.oc.api.network.Connector;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.ManagedEnvironment;
 import li.cil.oc.integration.util.ItemCharge;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import svitoos.OCStuff.util.OCUtils;
+import svitoos.OCStuff.util.OCUtils.Device;
 
-public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo {
-
-  private static final Map<String, String> deviceInfo;
-
-  static {
-    deviceInfo = new HashMap<>();
-    deviceInfo.put(DeviceAttribute.Class, DeviceClass.Generic);
-    deviceInfo.put(DeviceAttribute.Description, "Item Charger");
-    deviceInfo.put(DeviceAttribute.Vendor, "Scrag Technologies");
-    deviceInfo.put(DeviceAttribute.Product, "ItemCharger");
-  }
+public class UpgradeItemCharger extends ManagedEnvironmentWithDeviceInfo {
 
   private final EnvironmentHost host;
   private boolean charge;
@@ -43,8 +31,9 @@ public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo
   }
 
   @Override
-  public Map<String, String> getDeviceInfo() {
-    return deviceInfo;
+  protected Device deviceInfo() {
+    return new OCUtils.Device(
+        DeviceClass.Generic, "Item Charger", OCUtils.Vendors.Scrag, "ItemCharger");
   }
 
   @Override
@@ -73,7 +62,7 @@ public class UpgradeItemCharger extends ManagedEnvironment implements DeviceInfo
 
   @Callback(
       doc =
-          "charge([enable:boolean]):boolean --  Activate or deactivate item charging. Returns whether the charger is currently charging item.")
+          "function([enable:boolean]):boolean -- Activate or deactivate item charging. Returns whether the charger is currently charging item.")
   public Object[] charge(Context context, Arguments arguments) {
     if (arguments.count() > 0) {
       charge = arguments.checkBoolean(0);
