@@ -19,7 +19,7 @@ import svitoos.OCStuff.driver.UpgradeEnderlink;
     modid = OCStuff.MOD_ID,
     name = OCStuff.MOD_NAME,
     version = OCStuff.VERSION /*@MCVERSIONDEP@*/,
-    dependencies = "required-after:OpenComputers@[1.6.2,);after:IC2@[2.2.828,)")
+    dependencies = "required-after:OpenComputers@[1.6.2,);after:IC2@[2.2.827,)")
 public class OCStuff {
 
   public static final String MOD_ID = "@MODID@";
