@@ -1,6 +1,7 @@
 package svitoos.OCStuff;
 
 import java.io.File;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 public class Config {
@@ -49,6 +50,16 @@ public class Config {
                 1.0,
                 "How much energy is consumed when the Geolyzer analyzes a ranged block. (geolyzerScan + range * costPerRange)")
             .getDouble();
+
+    // import from migration from old erroneous config
+    if (configuration.getCategoryNames().contains("costPerRange")) {
+      ConfigCategory cat = configuration.getCategory("costPerRange");
+      if (cat.containsKey("geolyzer")) {
+        geolyzerCostPerRange = cat.get("geolyzer").getDouble();
+        configuration.getCategory("geolyzer").get("costPerRange").set(geolyzerCostPerRange);
+      }
+      configuration.removeCategory(cat);
+    }
 
     // Enderlink Upgrade
 
